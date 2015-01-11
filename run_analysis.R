@@ -3,7 +3,6 @@ feature_data <- read.csv('./UCI HAR Dataset/features.txt', sep = ' ', header = F
 names(feature_data) <- c('index', 'name')
 feature_index <- grep('-mean\\(\\)|-std\\(\\)', feature_data$name)
 feature_names <- feature_data$name[feature_index]
-
 # Genearate Test data and label the variables
 test_label <- read.csv('./UCI HAR Dataset/test/y_test.txt', header = FALSE)
 names(test_label) <- c('activity')
@@ -34,8 +33,7 @@ data$activity <- factor(data$activity, levels = c(1,2,3,4,5,6),
 for(i in 3:68) {
   data[, i] = as.numeric(as.character(data[, i]))
 }
-write.csv(data, 'full_data.csv')
-
+write.table(data, './full_data.txt', row.names = FALSE)
 # Generate Tidy data set
 tidy <- aggregate(.~subject + activity, data = data, mean)
-write.csv(tidy, 'tidy.csv')
+write.table(tidy, './tidy.txt', row.names = FALSE)
